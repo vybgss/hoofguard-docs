@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hoofguard — Defend the realm</title>
+  <meta name="description" content="Hoofguard: ride, build and hold your castle against goblin raids. A cozy castle defense for iPhone." />
+  <style>
+    :root {
+      --navy: #1a1c33;
+      --panel-top: #333866;
+      --panel-bottom: #1c1f3d;
+      --gold: #ffc72e;
+      --gold-light: #ffe680;
+      --gold-dark: #d98008;
+      --red: #f24d47;
+      --paper: #edd6a3;
+      --paper-light: #fcf2d1;
+      --paper-edge: #6b4521;
+      --ink: #402614;
+      --font: ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN", "Arial Rounded MT Bold", "Nunito", system-ui, sans-serif;
+      /* The lattice woven into every board and sheet: diamonds, a dot in every other crossing. */
+      --lattice-gold: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Cpath d='M0 0L26 26M26 0L0 26' stroke='%23ffe680' stroke-opacity='0.06' stroke-width='1'/%3E%3Ccircle cx='13' cy='13' r='1.6' fill='%23ffc72e' fill-opacity='0.18'/%3E%3C/svg%3E");
+      --lattice-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M0 0L22 22M22 0L0 22' stroke='%236b4521' stroke-opacity='0.09' stroke-width='1'/%3E%3Ccircle cx='11' cy='11' r='1.6' fill='%236b4521' fill-opacity='0.16'/%3E%3C/svg%3E");
+      --stud: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe680'/%3E%3Cstop offset='1' stop-color='%23d98008'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M7 1L13 7L7 13L1 7Z' fill='url(%23g)' stroke='%231a1c33' stroke-width='1'/%3E%3C/svg%3E");
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: #10122a;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--ink);
+      line-height: 1.6;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(77, 84, 150, 0.55) 0%, rgba(16, 18, 42, 0) 60%),
+        var(--lattice-gold),
+        linear-gradient(180deg, #23264a 0%, #10122a 100%);
+      background-attachment: fixed;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 28px 16px 56px;
+    }
+
+    .logo {
+      display: block;
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      margin: 0 auto;
+      filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
+    }
+
+    /* The red ribbon with swallow-tail ends that names every menu in the game. */
+    .ribbon {
+      position: relative;
+      width: fit-content;
+      max-width: 100%;
+      margin: 10px auto 0;
+      padding: 10px 64px 12px;
+      clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 50%, 100% 100%, 0 100%, 22px 50%);
+      background: linear-gradient(180deg, #e3433e 0%, #a52a26 100%);
+      filter: drop-shadow(0 4px 0 #5e1714);
+    }
+
+    .ribbon h1 {
+      margin: 0;
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+      text-align: center;
+      text-shadow:
+        -2px -2px 0 var(--navy), 2px -2px 0 var(--navy), -2px 2px 0 var(--navy), 2px 2px 0 var(--navy),
+        0 -2px 0 var(--navy), 0 2px 0 var(--navy), -2px 0 0 var(--navy), 2px 0 0 var(--navy),
+        0 4px 0 var(--navy);
+    }
+
+    .updated {
+      margin: 14px 0 26px;
+      text-align: center;
+      color: var(--gold-light);
+      font-size: 0.85rem;
+      font-weight: 700;
+      opacity: 0.8;
+    }
+
+    /* The board every menu is laid out on: royal cloth, a gilt double frame, studs in its corners. */
+    .board {
+      position: relative;
+      padding: 30px 26px 26px;
+      border: 3.5px solid transparent;
+      border-radius: 32px;
+      background:
+        var(--stud) no-repeat left 12px top 12px,
+        var(--stud) no-repeat right 12px top 12px,
+        var(--stud) no-repeat left 12px bottom 12px,
+        var(--stud) no-repeat right 12px bottom 12px,
+        radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.32) 100%) padding-box,
+        var(--lattice-gold) padding-box,
+        linear-gradient(180deg, var(--panel-top), var(--panel-bottom)) padding-box,
+        linear-gradient(180deg, var(--gold-light), var(--gold-dark)) border-box;
+      box-shadow: 0 7px 0 #0b0c1c, 0 22px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .board::before {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border: 1.2px solid rgba(255, 199, 46, 0.4);
+      border-radius: 26px;
+      pointer-events: none;
+    }
+
+    /* "◆ SECTION ◆" with fading gold rules, as the shop and the journal head their lists. */
+    .section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 26px 0 14px;
+      color: var(--gold-light);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section:first-child {
+      margin-top: 0;
+    }
+
+    .section::before,
+    .section::after {
+      content: "";
+      flex: 1;
+      height: 1.5px;
+    }
+
+    .section::before {
+      background: linear-gradient(90deg, rgba(255, 199, 46, 0), rgba(255, 199, 46, 0.7));
+    }
+
+    .section::after {
+      background: linear-gradient(90deg, rgba(255, 199, 46, 0.7), rgba(255, 199, 46, 0));
+    }
+
+    .section span::before,
+    .section span::after {
+      content: "◆";
+      color: var(--gold);
+      font-size: 0.6rem;
+      margin: 0 8px;
+      vertical-align: 2px;
+    }
+
+    /* The kingdom's paper: aged parchment with the lattice and an ink frame. */
+    .sheet {
+      position: relative;
+      padding: 18px 24px 16px;
+      margin-bottom: 16px;
+      border: 3px solid var(--paper-edge);
+      border-radius: 22px;
+      background:
+        radial-gradient(ellipse at center, rgba(107, 69, 33, 0) 45%, rgba(107, 69, 33, 0.22) 100%),
+        var(--lattice-ink),
+        linear-gradient(180deg, var(--paper-light), var(--paper));
+      box-shadow: 0 6px 0 #452d15, 0 12px 22px rgba(0, 0, 0, 0.35);
+    }
+
+    .sheet::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border: 1.3px solid rgba(107, 69, 33, 0.35);
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    .sheet.lede {
+      background:
+        var(--stud) no-repeat left 9px top 9px,
+        var(--stud) no-repeat right 9px top 9px,
+        var(--stud) no-repeat left 9px bottom 9px,
+        var(--stud) no-repeat right 9px bottom 9px,
+        radial-gradient(ellipse at center, rgba(107, 69, 33, 0) 45%, rgba(107, 69, 33, 0.22) 100%),
+        var(--lattice-ink),
+        linear-gradient(180deg, var(--paper-light), var(--paper));
+      padding: 22px 30px 18px;
+    }
+
+    h2 {
+      margin: 0 0 6px;
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .sheet.lede h2 {
+      color: #a52a26;
+    }
+
+    p,
+    li {
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: rgba(64, 38, 20, 0.92);
+    }
+
+    p {
+      margin: 6px 0;
+    }
+
+    ul {
+      margin: 6px 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    li::marker {
+      content: "◆  ";
+      color: var(--gold-dark);
+      font-size: 0.7em;
+    }
+
+    strong {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    a {
+      color: #a52a26;
+      font-weight: 800;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 2px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      color: var(--gold-light);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .footer a {
+      color: var(--gold);
+    }
+
+    .footer .motto {
+      display: block;
+      margin-bottom: 4px;
+      opacity: 0.75;
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        padding: 18px 12px 40px;
+      }
+
+      .ribbon {
+        padding: 8px 46px 10px;
+      }
+
+      .ribbon h1 {
+        font-size: 1.55rem;
+      }
+
+      .board {
+        padding: 24px 14px 18px;
+        border-radius: 26px;
+      }
+
+      .board::before {
+        border-radius: 20px;
+      }
+
+      .sheet,
+      .sheet.lede {
+        padding: 16px 18px 14px;
+      }
+    }
+
+    .intro {
+      margin: 14px auto 22px;
+      max-width: 560px;
+      text-align: center;
+      color: var(--gold-light);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .store {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    /* The game's green button: a raised face on a dark slab, outlined white letters. */
+    .button {
+      display: inline-block;
+      max-width: 100%;
+      padding: 12px 28px 13px;
+      border: 2px solid #2f7a35;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #6fd476 0%, #3e9e45 100%);
+      box-shadow: 0 5px 0 #24602a, 0 10px 18px rgba(0, 0, 0, 0.3);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 900;
+      text-align: center;
+      text-decoration: none;
+      text-shadow:
+        -1.5px -1.5px 0 #24602a, 1.5px -1.5px 0 #24602a, -1.5px 1.5px 0 #24602a, 1.5px 1.5px 0 #24602a,
+        0 2px 0 #24602a;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .features .sheet {
+      margin-bottom: 0;
+    }
+
+    .feature-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .feature-head h2 {
+      margin: 0;
+    }
+
+    /* A gilt medallion for each feature's emblem, like the dialogue portraits. */
+    .medal {
+      flex: none;
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom));
+      box-shadow: 0 3px 0 var(--navy);
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+
+    /* Screenshots in phone frames, side by side; they scroll sideways on a narrow screen. */
+    .gallery {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 4px 4px 14px;
+      margin: 0 -4px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-dark) transparent;
+    }
+
+    .shot {
+      flex: 0 0 200px;
+      margin: 0;
+      scroll-snap-align: center;
+      text-align: center;
+    }
+
+    .shot img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 4px solid var(--navy);
+      border-radius: 26px;
+      outline: 2.5px solid var(--gold);
+      outline-offset: 0;
+      box-shadow: 0 6px 0 #0b0c1c, 0 14px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    .shot figcaption {
+      margin-top: 12px;
+      color: var(--gold-light);
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    @media (max-width: 620px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .shot {
+        flex-basis: 170px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <img class="logo" src="logo.png" alt="Hoofguard — Defend the realm" />
+    <div class="ribbon">
+      <h1>Ride · Build · Defend</h1>
+    </div>
+    <p class="intro">
+      A cozy castle defense for iPhone. Ride out on your white horse, raise towers and walls,
+      grow a town — and hold the realm against wave after wave of goblins.
+    </p>
+    <div class="store">
+      <!-- Becomes a link to the App Store page once the game is out. -->
+      <span class="button">Coming soon on the App Store</span>
+    </div>
+
+    <main class="board">
+      <div class="section"><span>Why you'll love it</span></div>
+
+      <div class="features">
+        <div class="sheet">
+          <div class="feature-head"><span class="medal">🏹</span><h2>One finger, one knight</h2></div>
+          <p>
+            Steer with a floating joystick anywhere on the screen. Your knight shoots on his own —
+            you choose where to ride and who to save.
+          </p>
+        </div>
+
+        <div class="sheet">
+          <div class="feature-head"><span class="medal">🏰</span><h2>Build by riding</h2></div>
+          <p>
+            Stop on a plot and watch the coins flow in. Archer towers, palisades, a forge, farms, a
+            market, a temple — and every level of every building looks different.
+          </p>
+        </div>
+
+        <div class="sheet">
+          <div class="feature-head"><span class="medal">⚔️</span><h2>Goblins, orcs &amp; warlords</h2></div>
+          <p>
+            Raids come down the forest roads: shielded orcs you must ride around, rams that go
+            straight for your walls, and warlords who will not leave quietly.
+          </p>
+        </div>
+
+        <div class="sheet">
+          <div class="feature-head"><span class="medal">📜</span><h2>A chronicle with a smile</h2></div>
+          <p>
+            Your steward, Captain Brenna and a kingdom of villagers bring you news, troubles and
+            choices — hire Sir Baldric the Not-Quite-Brave, or send him off?
+          </p>
+        </div>
+
+        <div class="sheet">
+          <div class="feature-head"><span class="medal">🪿</span><h2>Unlikely allies</h2></div>
+          <p>
+            A war dog that bites, a goat that headbutts goblins off their feet, and a goose that
+            picks one goblin and chases it to the bitter end.
+          </p>
+        </div>
+
+        <div class="sheet">
+          <div class="feature-head"><span class="medal">🛡️</span><h2>Play your way</h2></div>
+          <p>
+            Fully offline, no account, no ads that interrupt you — reward videos only when you choose
+            one. In English, German, French, Ukrainian, Spanish, Japanese and Portuguese.
+          </p>
+        </div>
+      </div>
+
+      <div class="section" style="margin-top: 30px;"><span>Screenshots</span></div>
+
+      <div class="gallery">
+        <figure class="shot">
+          <img src="screenshots/kingdom.jpg" alt="A grown kingdom around the castle" loading="lazy" />
+          <figcaption>Grow your kingdom</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="screenshots/battle.jpg" alt="The knight, a war goat and a war dog fighting orcs on the road" loading="lazy" />
+          <figcaption>Hold the roads</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="screenshots/story.jpg" alt="Captain Brenna asking whether to hire Sir Baldric" loading="lazy" />
+          <figcaption>Make the calls</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="screenshots/spoils.jpg" alt="The spoils of a repelled raid" loading="lazy" />
+          <figcaption>Claim the spoils</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="screenshots/shop.jpg" alt="The shop with permanent upgrades" loading="lazy" />
+          <figcaption>Upgrade for good</figcaption>
+        </figure>
+      </div>
+
+      <div class="section" style="margin-top: 26px;"><span>The realm awaits</span></div>
+
+      <div class="sheet lede">
+        <h2>When the chronicle ends, the realm goes on</h2>
+        <p>
+          After the story, raids keep coming and the king sends royal decrees. How long can your
+          castle stand?
+        </p>
+        <p>
+          Questions or ideas? Write to
+          <a href="mailto:volodymyr.sichka@gmail.com">volodymyr.sichka@gmail.com</a>.
+        </p>
+      </div>
+    </main>
+
+    <p class="footer">
+      <span class="motto">Defend the realm.</span>
+      <a href="support.html">Support</a> · <a href="privacy-policy.html">Privacy Policy</a>
+    </p>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hoofguard — Support</title>
+  <style>
+    :root {
+      --navy: #1a1c33;
+      --panel-top: #333866;
+      --panel-bottom: #1c1f3d;
+      --gold: #ffc72e;
+      --gold-light: #ffe680;
+      --gold-dark: #d98008;
+      --red: #f24d47;
+      --paper: #edd6a3;
+      --paper-light: #fcf2d1;
+      --paper-edge: #6b4521;
+      --ink: #402614;
+      --font: ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN", "Arial Rounded MT Bold", "Nunito", system-ui, sans-serif;
+      /* The lattice woven into every board and sheet: diamonds, a dot in every other crossing. */
+      --lattice-gold: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Cpath d='M0 0L26 26M26 0L0 26' stroke='%23ffe680' stroke-opacity='0.06' stroke-width='1'/%3E%3Ccircle cx='13' cy='13' r='1.6' fill='%23ffc72e' fill-opacity='0.18'/%3E%3C/svg%3E");
+      --lattice-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M0 0L22 22M22 0L0 22' stroke='%236b4521' stroke-opacity='0.09' stroke-width='1'/%3E%3Ccircle cx='11' cy='11' r='1.6' fill='%236b4521' fill-opacity='0.16'/%3E%3C/svg%3E");
+      --stud: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe680'/%3E%3Cstop offset='1' stop-color='%23d98008'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M7 1L13 7L7 13L1 7Z' fill='url(%23g)' stroke='%231a1c33' stroke-width='1'/%3E%3C/svg%3E");
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: #10122a;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--ink);
+      line-height: 1.6;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(77, 84, 150, 0.55) 0%, rgba(16, 18, 42, 0) 60%),
+        var(--lattice-gold),
+        linear-gradient(180deg, #23264a 0%, #10122a 100%);
+      background-attachment: fixed;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 28px 16px 56px;
+    }
+
+    .logo {
+      display: block;
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      margin: 0 auto;
+      filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
+    }
+
+    /* The red ribbon with swallow-tail ends that names every menu in the game. */
+    .ribbon {
+      position: relative;
+      width: fit-content;
+      max-width: 100%;
+      margin: 10px auto 0;
+      padding: 10px 64px 12px;
+      clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 50%, 100% 100%, 0 100%, 22px 50%);
+      background: linear-gradient(180deg, #e3433e 0%, #a52a26 100%);
+      filter: drop-shadow(0 4px 0 #5e1714);
+    }
+
+    .ribbon h1 {
+      margin: 0;
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+      text-align: center;
+      text-shadow:
+        -2px -2px 0 var(--navy), 2px -2px 0 var(--navy), -2px 2px 0 var(--navy), 2px 2px 0 var(--navy),
+        0 -2px 0 var(--navy), 0 2px 0 var(--navy), -2px 0 0 var(--navy), 2px 0 0 var(--navy),
+        0 4px 0 var(--navy);
+    }
+
+    .updated {
+      margin: 14px 0 26px;
+      text-align: center;
+      color: var(--gold-light);
+      font-size: 0.85rem;
+      font-weight: 700;
+      opacity: 0.8;
+    }
+
+    /* The board every menu is laid out on: royal cloth, a gilt double frame, studs in its corners. */
+    .board {
+      position: relative;
+      padding: 30px 26px 26px;
+      border: 3.5px solid transparent;
+      border-radius: 32px;
+      background:
+        var(--stud) no-repeat left 12px top 12px,
+        var(--stud) no-repeat right 12px top 12px,
+        var(--stud) no-repeat left 12px bottom 12px,
+        var(--stud) no-repeat right 12px bottom 12px,
+        radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.32) 100%) padding-box,
+        var(--lattice-gold) padding-box,
+        linear-gradient(180deg, var(--panel-top), var(--panel-bottom)) padding-box,
+        linear-gradient(180deg, var(--gold-light), var(--gold-dark)) border-box;
+      box-shadow: 0 7px 0 #0b0c1c, 0 22px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .board::before {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border: 1.2px solid rgba(255, 199, 46, 0.4);
+      border-radius: 26px;
+      pointer-events: none;
+    }
+
+    /* "◆ SECTION ◆" with fading gold rules, as the shop and the journal head their lists. */
+    .section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 26px 0 14px;
+      color: var(--gold-light);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section:first-child {
+      margin-top: 0;
+    }
+
+    .section::before,
+    .section::after {
+      content: "";
+      flex: 1;
+      height: 1.5px;
+    }
+
+    .section::before {
+      background: linear-gradient(90deg, rgba(255, 199, 46, 0), rgba(255, 199, 46, 0.7));
+    }
+
+    .section::after {
+      background: linear-gradient(90deg, rgba(255, 199, 46, 0.7), rgba(255, 199, 46, 0));
+    }
+
+    .section span::before,
+    .section span::after {
+      content: "◆";
+      color: var(--gold);
+      font-size: 0.6rem;
+      margin: 0 8px;
+      vertical-align: 2px;
+    }
+
+    /* The kingdom's paper: aged parchment with the lattice and an ink frame. */
+    .sheet {
+      position: relative;
+      padding: 18px 24px 16px;
+      margin-bottom: 16px;
+      border: 3px solid var(--paper-edge);
+      border-radius: 22px;
+      background:
+        radial-gradient(ellipse at center, rgba(107, 69, 33, 0) 45%, rgba(107, 69, 33, 0.22) 100%),
+        var(--lattice-ink),
+        linear-gradient(180deg, var(--paper-light), var(--paper));
+      box-shadow: 0 6px 0 #452d15, 0 12px 22px rgba(0, 0, 0, 0.35);
+    }
+
+    .sheet::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border: 1.3px solid rgba(107, 69, 33, 0.35);
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    .sheet.lede {
+      background:
+        var(--stud) no-repeat left 9px top 9px,
+        var(--stud) no-repeat right 9px top 9px,
+        var(--stud) no-repeat left 9px bottom 9px,
+        var(--stud) no-repeat right 9px bottom 9px,
+        radial-gradient(ellipse at center, rgba(107, 69, 33, 0) 45%, rgba(107, 69, 33, 0.22) 100%),
+        var(--lattice-ink),
+        linear-gradient(180deg, var(--paper-light), var(--paper));
+      padding: 22px 30px 18px;
+    }
+
+    h2 {
+      margin: 0 0 6px;
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .sheet.lede h2 {
+      color: #a52a26;
+    }
+
+    p,
+    li {
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: rgba(64, 38, 20, 0.92);
+    }
+
+    p {
+      margin: 6px 0;
+    }
+
+    ul {
+      margin: 6px 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    li::marker {
+      content: "◆  ";
+      color: var(--gold-dark);
+      font-size: 0.7em;
+    }
+
+    strong {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    a {
+      color: #a52a26;
+      font-weight: 800;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 2px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      color: var(--gold-light);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .footer a {
+      color: var(--gold);
+    }
+
+    .footer .motto {
+      display: block;
+      margin-bottom: 4px;
+      opacity: 0.75;
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        padding: 18px 12px 40px;
+      }
+
+      .ribbon {
+        padding: 8px 46px 10px;
+      }
+
+      .ribbon h1 {
+        font-size: 1.55rem;
+      }
+
+      .board {
+        padding: 24px 14px 18px;
+        border-radius: 26px;
+      }
+
+      .board::before {
+        border-radius: 20px;
+      }
+
+      .sheet,
+      .sheet.lede {
+        padding: 16px 18px 14px;
+      }
+    }
+  
+    .intro {
+      margin: 14px 0 26px;
+      text-align: center;
+      color: var(--gold-light);
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    /* The game's green button: a raised face on a dark slab, outlined white letters. */
+    .button {
+      display: inline-block;
+      margin: 10px 0 4px;
+      padding: 12px 26px 13px;
+      border: 2px solid #2f7a35;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #6fd476 0%, #3e9e45 100%);
+      box-shadow: 0 5px 0 #24602a, 0 10px 18px rgba(0, 0, 0, 0.3);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 900;
+      max-width: 100%;
+      text-decoration: none;
+      text-shadow:
+        -1.5px -1.5px 0 #24602a, 1.5px -1.5px 0 #24602a, -1.5px 1.5px 0 #24602a, 1.5px 1.5px 0 #24602a,
+        0 2px 0 #24602a;
+    }
+
+    .button:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #24602a, 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <img class="logo" src="logo.png" alt="Hoofguard — Defend the realm" />
+    <div class="ribbon">
+      <h1>Support</h1>
+    </div>
+    <p class="intro">
+      Ride, build, and hold the castle against the goblin raids.<br />
+      Answers to common questions are below.
+    </p>
+
+    <main class="board">
+      <div class="section"><span>Playing</span></div>
+
+      <div class="sheet lede">
+        <h2>How is it played?</h2>
+        <p>
+          Put your finger anywhere on the screen and steer your knight with the floating joystick —
+          he shoots on his own at any enemy in range. To build or upgrade, ride onto a building's
+          circle and hold still: coins (and later wood, stone and food) flow in until it is paid.
+          When you are ready, sound the <strong>horn</strong> to call the next raid, and keep the
+          goblins away from your castle.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>Is there a pause button?</h2>
+        <p>
+          No need for one: the game pauses whenever a menu is open or you leave the app, and waits
+          for you during conversations and reward windows.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>What happens if the castle falls?</h2>
+        <p>
+          You can fight on with the castle half rebuilt by watching a short video, or rebuild: the
+          raiders carry off part of your coins and the same raid can be fought again. Your buildings
+          keep their levels, and anything knocked down can be rebuilt.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>How do I repair towers and walls?</h2>
+        <p>
+          After a raid, a damaged building gets a red circle with a hammer. Ride onto it: every coin
+          you pay mends it at once. A building that fell leaves ruins, and rebuilding them costs less
+          than building anew, at the same level. The castle itself heals after every victory.
+        </p>
+      </div>
+
+      <div class="section"><span>Rewards &amp; videos</span></div>
+
+      <div class="sheet">
+        <h2>Where do crystals come from, and what are they for?</h2>
+        <p>
+          Crystals come from story and side tasks in the journal, from repelled raids, from some of
+          the kingdom's happenings and from a few videos in the shop each day. Spend them on hero
+          talents and on permanent shop upgrades — a war dog, a goose, a goat, faster builders and
+          more. They can't be bought.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>Do I have to watch ads?</h2>
+        <p>
+          Never. Videos are only offered — to fight on after a defeat, to take a raid's spoils
+          several times over, for crystals in the shop, or to mend everything after a raid. There
+          are no banners and no ads that play by themselves.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>Why don't I see a video button?</h2>
+        <p>
+          A video button only appears when a video is ready to play, which needs an internet
+          connection. The shop's crystal videos also have a daily limit; they come back the next
+          day. Everything else in the game works offline.
+        </p>
+      </div>
+
+      <div class="section"><span>Your kingdom</span></div>
+
+      <div class="sheet">
+        <h2>Is my progress saved?</h2>
+        <p>
+          Yes, automatically and on your device only. It isn't synced between devices or via
+          iCloud, so deleting the app also deletes your kingdom.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>Can I play without internet?</h2>
+        <p>
+          Yes — the whole game, story included. Only the optional reward videos need a connection.
+        </p>
+      </div>
+
+      <div class="section"><span>Settings &amp; privacy</span></div>
+
+      <div class="sheet">
+        <h2>Can I change the language?</h2>
+        <p>
+          Yes. Hoofguard is available in English, German, French, Ukrainian, Spanish, Japanese and
+          Portuguese. By default it follows your phone's language (if supported); you can change it
+          any time in Settings.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>Can I turn off sound, music, vibration or damage numbers?</h2>
+        <p>Each one has its own switch in Settings.</p>
+      </div>
+
+      <div class="sheet">
+        <h2>How do I change my ad privacy choices?</h2>
+        <p>
+          Tracking is up to you in iPhone <strong>Settings → Privacy &amp; Security →
+            Tracking</strong>. In Europe, the UK and Switzerland, the game's Settings also have
+          <strong>Privacy choices</strong>, where you can change the answers you gave Google's consent
+          form. Details are in the <a href="privacy-policy.html">Privacy Policy</a>.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>System requirements</h2>
+        <p>iPhone with iOS 18 or later. An internet connection is needed only for reward videos.</p>
+      </div>
+
+      <div class="section"><span>Contact</span></div>
+
+      <div class="sheet">
+        <h2>Contact &amp; feedback</h2>
+        <p>
+          Found a bug, stuck somewhere, or have an idea for the kingdom? Write to us — we read
+          everything.
+        </p>
+        <a class="button" href="mailto:volodymyr.sichka@gmail.com">✉ Write to us</a>
+        <p>
+          <strong>Email:</strong>
+          <a href="mailto:volodymyr.sichka@gmail.com">volodymyr.sichka@gmail.com</a>
+        </p>
+      </div>
+    </main>
+
+    <p class="footer">
+      <span class="motto">Defend the realm.</span>
+      <a href="marketing.html">Home</a> · <a href="privacy-policy.html">Privacy Policy</a>
+    </p>
+  </div>
+</body>
+
+</html>

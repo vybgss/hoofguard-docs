@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hoofguard — Privacy Policy</title>
+  <style>
+    :root {
+      --navy: #1a1c33;
+      --panel-top: #333866;
+      --panel-bottom: #1c1f3d;
+      --gold: #ffc72e;
+      --gold-light: #ffe680;
+      --gold-dark: #d98008;
+      --red: #f24d47;
+      --paper: #edd6a3;
+      --paper-light: #fcf2d1;
+      --paper-edge: #6b4521;
+      --ink: #402614;
+      --font: ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN", "Arial Rounded MT Bold", "Nunito", system-ui, sans-serif;
+      /* The lattice woven into every board and sheet: diamonds, a dot in every other crossing. */
+      --lattice-gold: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Cpath d='M0 0L26 26M26 0L0 26' stroke='%23ffe680' stroke-opacity='0.06' stroke-width='1'/%3E%3Ccircle cx='13' cy='13' r='1.6' fill='%23ffc72e' fill-opacity='0.18'/%3E%3C/svg%3E");
+      --lattice-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M0 0L22 22M22 0L0 22' stroke='%236b4521' stroke-opacity='0.09' stroke-width='1'/%3E%3Ccircle cx='11' cy='11' r='1.6' fill='%236b4521' fill-opacity='0.16'/%3E%3C/svg%3E");
+      --stud: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe680'/%3E%3Cstop offset='1' stop-color='%23d98008'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M7 1L13 7L7 13L1 7Z' fill='url(%23g)' stroke='%231a1c33' stroke-width='1'/%3E%3C/svg%3E");
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: #10122a;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--ink);
+      line-height: 1.6;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(77, 84, 150, 0.55) 0%, rgba(16, 18, 42, 0) 60%),
+        var(--lattice-gold),
+        linear-gradient(180deg, #23264a 0%, #10122a 100%);
+      background-attachment: fixed;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 28px 16px 56px;
+    }
+
+    .logo {
+      display: block;
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      margin: 0 auto;
+      filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
+    }
+
+    /* The red ribbon with swallow-tail ends that names every menu in the game. */
+    .ribbon {
+      position: relative;
+      width: fit-content;
+      max-width: 100%;
+      margin: 10px auto 0;
+      padding: 10px 64px 12px;
+      clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 50%, 100% 100%, 0 100%, 22px 50%);
+      background: linear-gradient(180deg, #e3433e 0%, #a52a26 100%);
+      filter: drop-shadow(0 4px 0 #5e1714);
+    }
+
+    .ribbon h1 {
+      margin: 0;
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+      text-align: center;
+      text-shadow:
+        -2px -2px 0 var(--navy), 2px -2px 0 var(--navy), -2px 2px 0 var(--navy), 2px 2px 0 var(--navy),
+        0 -2px 0 var(--navy), 0 2px 0 var(--navy), -2px 0 0 var(--navy), 2px 0 0 var(--navy),
+        0 4px 0 var(--navy);
+    }
+
+    .updated {
+      margin: 14px 0 26px;
+      text-align: center;
+      color: var(--gold-light);
+      font-size: 0.85rem;
+      font-weight: 700;
+      opacity: 0.8;
+    }
+
+    /* The board every menu is laid out on: royal cloth, a gilt double frame, studs in its corners. */
+    .board {
+      position: relative;
+      padding: 30px 26px 26px;
+      border: 3.5px solid transparent;
+      border-radius: 32px;
+      background:
+        var(--stud) no-repeat left 12px top 12px,
+        var(--stud) no-repeat right 12px top 12px,
+        var(--stud) no-repeat left 12px bottom 12px,
+        var(--stud) no-repeat right 12px bottom 12px,
+        radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.32) 100%) padding-box,
+        var(--lattice-gold) padding-box,
+        linear-gradient(180deg, var(--panel-top), var(--panel-bottom)) padding-box,
+        linear-gradient(180deg, var(--gold-light), var(--gold-dark)) border-box;
+      box-shadow: 0 7px 0 #0b0c1c, 0 22px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .board::before {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border: 1.2px solid rgba(255, 199, 46, 0.4);
+      border-radius: 26px;
+      pointer-events: none;
+    }
+
+    /* "◆ SECTION ◆" with fading gold rules, as the shop and the journal head their lists. */
+    .section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 26px 0 14px;
+      color: var(--gold-light);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section:first-child {
+      margin-top: 0;
+    }
+
+    .section::before,
+    .section::after {
+      content: "";
+      flex: 1;
+      height: 1.5px;
+    }
+
+    .section::before {
+      background: linear-gradient(90deg, rgba(255, 199, 46, 0), rgba(255, 199, 46, 0.7));
+    }
+
+    .section::after {
+      background: linear-gradient(90deg, rgba(255, 199, 46, 0.7), rgba(255, 199, 46, 0));
+    }
+
+    .section span::before,
+    .section span::after {
+      content: "◆";
+      color: var(--gold);
+      font-size: 0.6rem;
+      margin: 0 8px;
+      vertical-align: 2px;
+    }
+
+    /* The kingdom's paper: aged parchment with the lattice and an ink frame. */
+    .sheet {
+      position: relative;
+      padding: 18px 24px 16px;
+      margin-bottom: 16px;
+      border: 3px solid var(--paper-edge);
+      border-radius: 22px;
+      background:
+        radial-gradient(ellipse at center, rgba(107, 69, 33, 0) 45%, rgba(107, 69, 33, 0.22) 100%),
+        var(--lattice-ink),
+        linear-gradient(180deg, var(--paper-light), var(--paper));
+      box-shadow: 0 6px 0 #452d15, 0 12px 22px rgba(0, 0, 0, 0.35);
+    }
+
+    .sheet::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border: 1.3px solid rgba(107, 69, 33, 0.35);
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    .sheet.lede {
+      background:
+        var(--stud) no-repeat left 9px top 9px,
+        var(--stud) no-repeat right 9px top 9px,
+        var(--stud) no-repeat left 9px bottom 9px,
+        var(--stud) no-repeat right 9px bottom 9px,
+        radial-gradient(ellipse at center, rgba(107, 69, 33, 0) 45%, rgba(107, 69, 33, 0.22) 100%),
+        var(--lattice-ink),
+        linear-gradient(180deg, var(--paper-light), var(--paper));
+      padding: 22px 30px 18px;
+    }
+
+    h2 {
+      margin: 0 0 6px;
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .sheet.lede h2 {
+      color: #a52a26;
+    }
+
+    p,
+    li {
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: rgba(64, 38, 20, 0.92);
+    }
+
+    p {
+      margin: 6px 0;
+    }
+
+    ul {
+      margin: 6px 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    li::marker {
+      content: "◆  ";
+      color: var(--gold-dark);
+      font-size: 0.7em;
+    }
+
+    strong {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    a {
+      color: #a52a26;
+      font-weight: 800;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 2px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      color: var(--gold-light);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .footer a {
+      color: var(--gold);
+    }
+
+    .footer .motto {
+      display: block;
+      margin-bottom: 4px;
+      opacity: 0.75;
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        padding: 18px 12px 40px;
+      }
+
+      .ribbon {
+        padding: 8px 46px 10px;
+      }
+
+      .ribbon h1 {
+        font-size: 1.55rem;
+      }
+
+      .board {
+        padding: 24px 14px 18px;
+        border-radius: 26px;
+      }
+
+      .board::before {
+        border-radius: 20px;
+      }
+
+      .sheet,
+      .sheet.lede {
+        padding: 16px 18px 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <img class="logo" src="logo.png" alt="Hoofguard — Defend the realm" />
+    <div class="ribbon">
+      <h1>Privacy Policy</h1>
+    </div>
+    <p class="updated">Last updated: October 17, 2026</p>
+
+    <main class="board">
+      <div class="sheet lede">
+        <h2>The short version</h2>
+        <p>
+          <strong>Hoofguard</strong> has no accounts and no servers of ours: your kingdom lives on
+          your phone. The game can show optional <strong>reward videos</strong> from Google AdMob —
+          the only part of the app that goes online and the only part that collects any data. You
+          decide whether those videos may use tracking, and you never have to watch one to play.
+        </p>
+      </div>
+
+      <div class="section"><span>What happens to your data</span></div>
+
+      <div class="sheet">
+        <h2>1. What we collect</h2>
+        <p>
+          Nothing. We, the developer, run no servers, no analytics and no sign-up. The game never
+          asks for your name, e-mail, contacts, photos or precise location, and it sends nothing to
+          us.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>2. What stays on your phone</h2>
+        <p>So that your realm is still standing tomorrow, the game saves locally on the device:</p>
+        <ul>
+          <li>your kingdom: buildings, story progress, treasury and tasks;</li>
+          <li>crystals, hero talents and shop upgrades;</li>
+          <li>settings: sound, music, vibration, damage numbers and language;</li>
+          <li>how many crystal videos you have watched today, for the daily limit.</li>
+        </ul>
+        <p>
+          This is ordinary app storage on your own device. It is not uploaded, not synced to iCloud
+          or anywhere else, and deleting the app removes it completely.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>3. Reward videos (Google AdMob)</h2>
+        <p>
+          A video is only ever offered, never forced: to fight on after the castle falls, to take a
+          raid's spoils several times over, for a few crystals in the shop each day, or to mend
+          every damaged building at once after a raid. There are no banners and no ads that play by
+          themselves.
+        </p>
+        <p>
+          The videos come from <strong>Google AdMob</strong>. To show and measure them, Google's
+          Mobile Ads SDK may collect:
+        </p>
+        <ul>
+          <li>your IP address, which may be used to estimate your general location;</li>
+          <li>
+            device identifiers — the Advertising Identifier only if you allow tracking, otherwise
+            identifiers that stay within this developer's apps;
+          </li>
+          <li>which ads were shown and how you interacted with them;</li>
+          <li>performance and crash diagnostics of the ad SDK.</li>
+        </ul>
+        <p>
+          This data goes to Google, not to us, and is handled under the
+          <a href="https://policies.google.com/privacy">Google Privacy Policy</a>. See also
+          <a href="https://policies.google.com/technologies/partner-sites">how Google uses information
+            from apps that use its services</a>.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>4. Your choices</h2>
+        <ul>
+          <li>
+            <strong>Tracking.</strong> Before the first video, the game explains what the videos are
+            for, and then iOS asks whether the app may track you. If you ask it not to, the
+            Advertising Identifier is not shared and videos still work, just less tailored to you.
+            You can change this any time in iPhone <strong>Settings → Privacy &amp; Security →
+              Tracking</strong>.
+          </li>
+          <li>
+            <strong>Europe, the UK and Switzerland.</strong> Google's consent form asks for your
+            choices on first launch. You can change them later in the game's
+            <strong>Settings → Privacy choices</strong>.
+          </li>
+          <li>
+            <strong>No videos at all.</strong> Simply don't tap a video button — nothing else in the
+            game shows ads.
+          </li>
+        </ul>
+      </div>
+
+      <div class="sheet">
+        <h2>5. Internet</h2>
+        <p>
+          The whole game plays offline. Only the reward videos and Google's consent form need a
+          connection; without one, the video buttons simply don't appear.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>6. Purchases</h2>
+        <p>
+          Hoofguard has no in-app purchases. Crystals are earned in the game and can't be bought.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>7. Children's privacy</h2>
+        <p>
+          Hoofguard is not directed at children under 13, and we do not knowingly collect personal
+          information from anyone — children included.
+        </p>
+      </div>
+
+      <div class="sheet">
+        <h2>8. Changes to this policy</h2>
+        <p>
+          If our practices ever change, we will update this page and the "Last updated" date above.
+        </p>
+      </div>
+
+      <div class="section"><span>Questions</span></div>
+
+      <div class="sheet">
+        <h2>9. Contact</h2>
+        <p>
+          Questions about privacy or the game?<br />
+          <strong>Email:</strong>
+          <a href="mailto:volodymyr.sichka@gmail.com">volodymyr.sichka@gmail.com</a>
+        </p>
+      </div>
+    </main>
+
+    <p class="footer">
+      <span class="motto">Defend the realm.</span>
+      <a href="marketing.html">Home</a> · <a href="support.html">Support</a>
+    </p>
+  </div>
+</body>
+
+</html>
