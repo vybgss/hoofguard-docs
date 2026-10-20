@@ -329,6 +329,11 @@
         0 2px 0 #24602a;
     }
 
+    .button:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #24602a, 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
     .features {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -425,8 +430,8 @@
       grow a town — and hold the realm against wave after wave of goblins.
     </p>
     <div class="store">
-      <!-- Becomes a link to the App Store page once the game is out. -->
-      <span class="button">Coming soon on the App Store</span>
+      <!-- Without a storefront in the path the App Store opens each visitor's own country. -->
+      <a class="button" href="https://apps.apple.com/app/hoofguard/id6817000048">Get it on the App Store</a>
     </div>
 
     <main class="board">
